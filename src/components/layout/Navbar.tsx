@@ -1,20 +1,35 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { isAuthenticated, isVenueManager, user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const navLinks = [
+  const handleLogout = () => {
+    logout();
+    setIsOpen(false);
+    navigate('/');
+  };
+
+  const guestLinks = [
     { name: 'Home', path: '/' },
-    { name: 'My Venues', path: '/my-venues' },
-    { name: 'Profile', path: '/profile' },
     { name: 'Login', path: '/login' },
     { name: 'Register', path: '/register' },
   ];
+
+  const authLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Profile', path: '/profile' },
+    ...(isVenueManager ? [{ name: 'My Venues', path: '/my-venues' }] : []),
+  ];
+
+  const navLinks = isAuthenticated ? authLinks : guestLinks;
 
   return (
     <nav className="bg-white/90 backdrop-blur-md border-b border-orange-100 sticky top-0 z-50">
@@ -56,9 +71,33 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <Link to="/venue/create" className="px-5 py-2.5 font-semibold text-white transition-all duration-200 bg-orange-500 rounded-full hover:bg-orange-600 shadow-lg shadow-orange-500/30 hover:shadow-orange-600/40">
-            Create Venue
-          </Link>
+
+          {isAuthenticated ? (
+            <>
+              {isVenueManager && (
+                <Link to="/venue/create" className="px-5 py-2.5 font-semibold text-white transition-all duration-200 bg-orange-500 rounded-full hover:bg-orange-600 shadow-lg shadow-orange-500/30 hover:shadow-orange-600/40">
+                  Create Venue
+                </Link>
+              )}
+              <button
+                onClick={handleLogout}
+                className="flex items-center space-x-2 text-stone-600 font-medium hover:text-orange-600 transition-colors duration-200"
+              >
+                <span>Logout</span>
+                {user?.avatar?.url && (
+                  <img
+                    src={user.avatar.url}
+                    alt={user.avatar.alt || user.name}
+                    className="w-8 h-8 rounded-full object-cover border-2 border-orange-200"
+                  />
+                )}
+              </button>
+            </>
+          ) : (
+            <Link to="/login" className="px-5 py-2.5 font-semibold text-white transition-all duration-200 bg-orange-500 rounded-full hover:bg-orange-600 shadow-lg shadow-orange-500/30 hover:shadow-orange-600/40">
+              Get Started
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu (Collapsible/Lateral) */}
@@ -77,13 +116,34 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <Link
-              to="/venue/create"
-              className="px-5 py-2.5 font-semibold text-white transition-all bg-orange-500 rounded-full hover:bg-orange-600 text-center shadow-lg shadow-orange-500/30"
-              onClick={() => setIsOpen(false)}
-            >
-              Create Venue
-            </Link>
+
+            {isAuthenticated ? (
+              <>
+                {isVenueManager && (
+                  <Link
+                    to="/venue/create"
+                    className="px-5 py-2.5 font-semibold text-white transition-all bg-orange-500 rounded-full hover:bg-orange-600 text-center shadow-lg shadow-orange-500/30"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Create Venue
+                  </Link>
+                )}
+                <button
+                  onClick={handleLogout}
+                  className="px-5 py-2.5 font-semibold text-orange-600 border-2 border-orange-500 rounded-full hover:bg-orange-50 transition-colors text-center"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="px-5 py-2.5 font-semibold text-white transition-all bg-orange-500 rounded-full hover:bg-orange-600 text-center shadow-lg shadow-orange-500/30"
+                onClick={() => setIsOpen(false)}
+              >
+                Get Started
+              </Link>
+            )}
           </div>
         </div>
       </div>
