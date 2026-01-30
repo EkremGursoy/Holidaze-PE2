@@ -47,11 +47,11 @@ export default function UpdateVenuePage() {
     )
   }
 
-  // Convert venue data to form data format
+  // Convert venue data to form data format (map media to handle null alt values)
   const initialData: VenueFormData = {
     name: venue.name,
     description: venue.description,
-    media: venue.media || [],
+    media: venue.media?.map((m) => ({ url: m.url, alt: m.alt || undefined })) || [],
     price: venue.price,
     maxGuests: venue.maxGuests,
     rating: venue.rating,
