@@ -11,8 +11,10 @@ export type VenueMeta = {
 }
 
 export type VenueLocation = {
-  city: string | null
-  country: string | null
+  address?: string | null
+  city?: string | null
+  zip?: string | null
+  country?: string | null
 }
 
 export type Venue = {
