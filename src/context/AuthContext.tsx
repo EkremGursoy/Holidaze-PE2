@@ -52,6 +52,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
     localStorage.removeItem(STORAGE_API_KEY)
   }
 
+  const updateUser = (updates: Partial<User>) => {
+    if (!user) return
+    const updatedUser = { ...user, ...updates }
+    setUser(updatedUser)
+    localStorage.setItem(STORAGE_USER, JSON.stringify(updatedUser))
+  }
+
   const value = {
     user,
     apiKey,
@@ -59,6 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     isVenueManager: user?.venueManager ?? false,
     login,
     logout,
+    updateUser,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

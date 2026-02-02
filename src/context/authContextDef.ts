@@ -8,6 +8,7 @@ export type AuthContextType = {
   isVenueManager: boolean
   login: (user: User) => Promise<void>
   logout: () => void
+  updateUser: (updates: Partial<User>) => void
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null)

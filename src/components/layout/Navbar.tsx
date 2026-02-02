@@ -75,7 +75,7 @@ export default function Navbar() {
           {isAuthenticated ? (
             <>
               {isVenueManager && (
-                <Link to="/venue/create" className="px-5 py-2.5 font-semibold text-white transition-all duration-200 bg-orange-500 rounded-full hover:bg-orange-600 shadow-lg shadow-orange-500/30 hover:shadow-orange-600/40">
+                <Link to="/create-venue" className="px-5 py-2.5 font-semibold text-white transition-all duration-200 bg-orange-500 rounded-full hover:bg-orange-600 shadow-lg shadow-orange-500/30 hover:shadow-orange-600/40">
                   Create Venue
                 </Link>
               )}
@@ -121,7 +121,7 @@ export default function Navbar() {
               <>
                 {isVenueManager && (
                   <Link
-                    to="/venue/create"
+                    to="/create-venue"
                     className="px-5 py-2.5 font-semibold text-white transition-all bg-orange-500 rounded-full hover:bg-orange-600 text-center shadow-lg shadow-orange-500/30"
                     onClick={() => setIsOpen(false)}
                   >

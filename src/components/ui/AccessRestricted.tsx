@@ -2,9 +2,15 @@ import { Link } from 'react-router'
 
 type AccessRestrictedProps = {
   message: string
+  linkText?: string
+  linkTo?: string
 }
 
-export default function AccessRestricted({ message }: AccessRestrictedProps) {
+export default function AccessRestricted({
+  message,
+  linkText = 'Sign in',
+  linkTo = '/login'
+}: AccessRestrictedProps) {
   return (
     <div className="max-w-2xl mx-auto py-16 px-4">
       <div className="bg-orange-50 border border-orange-200 text-orange-700 px-6 py-8 rounded-2xl text-center">
@@ -13,8 +19,8 @@ export default function AccessRestricted({ message }: AccessRestrictedProps) {
         </svg>
         <h2 className="text-xl font-bold mb-2">Access Restricted</h2>
         <p className="mb-6">{message}</p>
-        <Link to="/login" className="inline-block px-6 py-3 bg-orange-500 text-white font-semibold rounded-xl hover:bg-orange-600 transition-colors">
-          Sign in
+        <Link to={linkTo} className="inline-block px-6 py-3 bg-orange-500 text-white font-semibold rounded-xl hover:bg-orange-600 transition-colors">
+          {linkText}
         </Link>
       </div>
     </div>
