@@ -1,6 +1,6 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
-export type ProfileUpdateData = {
+type ProfileUpdateData = {
   bio?: string
   avatar?: { url: string; alt?: string }
   banner?: { url: string; alt?: string }
@@ -122,6 +122,9 @@ export type ProfileVenue = {
     city?: string
     zip?: string
     country?: string
+    continent?: string
+    lat?: number
+    lng?: number
   }
   _count: {
     bookings: number

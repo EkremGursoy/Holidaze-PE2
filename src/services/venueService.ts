@@ -18,6 +18,9 @@ export type VenueFormData = {
     city?: string
     zip?: string
     country?: string
+    continent?: string
+    lat?: number
+    lng?: number
   }
 }
 
@@ -72,4 +75,28 @@ export async function deleteVenue(id: string, accessToken: string, apiKey: strin
     const json = await response.json()
     throw new Error(json.errors?.[0]?.message || 'Failed to delete venue')
   }
+}
+
+export async function createBooking(
+  data: { dateFrom: string; dateTo: string; guests: number; venueId: string },
+  accessToken: string,
+  apiKey: string
+): Promise<string> {
+  const response = await fetch(`${API_BASE_URL}/holidaze/bookings`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+      'X-Noroff-API-Key': apiKey,
+    },
+    body: JSON.stringify(data),
+  })
+
+  const json = await response.json()
+
+  if (!response.ok) {
+    throw new Error(json.errors?.[0]?.message || 'Failed to create booking')
+  }
+
+  return json.data.id as string
 }

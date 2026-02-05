@@ -33,7 +33,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-white/90 backdrop-blur-md border-b border-orange-100 sticky top-0 z-50">
-      <div className="container px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
+      <div className="container px-4 sm:px-6 py-4 mx-auto md:flex md:justify-between md:items-center">
         <div className="flex items-center justify-between">
           <Link to="/" className="text-2xl font-black text-orange-600 tracking-tight hover:text-orange-700 transition-colors">
             Holidaze
@@ -102,7 +102,7 @@ export default function Navbar() {
 
         {/* Mobile Menu (Collapsible/Lateral) */}
         <div
-          className={`absolute inset-x-0 z-20 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white border-b border-orange-100 md:hidden top-16 shadow-lg ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'
+          className={`absolute inset-x-0 z-20 w-full px-4 sm:px-6 py-4 transition-all duration-300 ease-in-out bg-white border-b border-orange-100 md:hidden top-16 shadow-lg ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'
             }`}
         >
           <div className="flex flex-col space-y-4">

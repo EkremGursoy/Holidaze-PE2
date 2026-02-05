@@ -8,7 +8,9 @@ type VenueResponse = {
     owner?: {
       name: string
       email: string
+      bio?: string
       avatar?: { url: string; alt?: string }
+      banner?: { url: string; alt?: string }
     }
     bookings?: {
       id: string
@@ -19,7 +21,7 @@ type VenueResponse = {
   }
 }
 
-export type VenueWithDetails = VenueResponse['data']
+type VenueWithDetails = VenueResponse['data']
 
 export function useVenue(id: string | undefined) {
   const [venue, setVenue] = useState<VenueWithDetails | null>(null)

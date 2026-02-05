@@ -1,10 +1,21 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
+import { useAuth } from '../../hooks/useAuth'
+import { createBooking } from '../../services/venueService'
+
+type ExistingBooking = {
+  id: string
+  dateFrom: string
+  dateTo: string
+  guests: number
+}
 
 type BookingCardProps = {
+  venueId: string
   price: number
   maxGuests: number
   isAuthenticated: boolean
+  bookings?: ExistingBooking[]
 }
 
 function calculateNights(checkIn: string, checkOut: string): number {
@@ -13,18 +24,69 @@ function calculateNights(checkIn: string, checkOut: string): number {
   return Math.max(0, nights)
 }
 
-export default function BookingCard({ price, maxGuests, isAuthenticated }: BookingCardProps) {
+/**
+ * Check if a date range overlaps with any existing bookings
+ */
+function hasDateConflict(checkIn: string, checkOut: string, bookings: ExistingBooking[]): boolean {
+  if (!checkIn || !checkOut || bookings.length === 0) return false
+
+  const newStart = new Date(checkIn).getTime()
+  const newEnd = new Date(checkOut).getTime()
+
+  return bookings.some((booking) => {
+    const existingStart = new Date(booking.dateFrom).getTime()
+    const existingEnd = new Date(booking.dateTo).getTime()
+    // Overlap: newStart < existingEnd AND newEnd > existingStart
+    return newStart < existingEnd && newEnd > existingStart
+  })
+}
+
+export default function BookingCard({ venueId, price, maxGuests, isAuthenticated, bookings = [] }: BookingCardProps) {
+  const { user, apiKey } = useAuth()
   const [guests, setGuests] = useState(1)
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
+  const [isBooking, setIsBooking] = useState(false)
+  const [bookingError, setBookingError] = useState('')
+  const [bookingSuccess, setBookingSuccess] = useState(false)
 
   const nights = calculateNights(checkIn, checkOut)
   const total = price * nights
   const today = new Date().toISOString().split('T')[0]
-  const canBook = checkIn && checkOut && nights > 0
+  const dateConflict = hasDateConflict(checkIn, checkOut, bookings)
+  const canBook = checkIn && checkOut && nights > 0 && !dateConflict
+
+  const handleBook = async () => {
+    if (!canBook || !user?.accessToken || !apiKey) return
+
+    setIsBooking(true)
+    setBookingError('')
+    setBookingSuccess(false)
+
+    try {
+      await createBooking(
+        {
+          dateFrom: new Date(checkIn).toISOString(),
+          dateTo: new Date(checkOut).toISOString(),
+          guests,
+          venueId,
+        },
+        user.accessToken,
+        apiKey
+      )
+      setBookingSuccess(true)
+      setCheckIn('')
+      setCheckOut('')
+      setGuests(1)
+    } catch (err) {
+      setBookingError(err instanceof Error ? err.message : 'Failed to create booking')
+    } finally {
+      setIsBooking(false)
+    }
+  }
 
   return (
-    <div className="sticky top-24 bg-white rounded-3xl border border-stone-100 shadow-xl shadow-orange-100/30 p-6">
+    <div className="lg:sticky lg:top-24 bg-white rounded-3xl border border-stone-100 shadow-xl shadow-orange-100/30 p-6">
       {/* Price */}
       <div className="flex items-baseline gap-2 mb-6">
         <span className="text-3xl font-black text-stone-800">${price}</span>
@@ -33,7 +95,7 @@ export default function BookingCard({ price, maxGuests, isAuthenticated }: Booki
 
       {/* Date & Guest Inputs */}
       <div className="space-y-4 mb-6">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label htmlFor="check-in" className="block text-sm font-semibold text-stone-700 mb-2">
               Check-in
@@ -98,12 +160,28 @@ export default function BookingCard({ price, maxGuests, isAuthenticated }: Booki
       {/* Action Button */}
       {isAuthenticated ? (
         <div>
+          {bookingSuccess && (
+            <div className="mb-4 p-4 rounded-xl bg-green-50 border border-green-200 text-green-700 text-sm">
+              Booking confirmed! Check your profile for details.
+            </div>
+          )}
+          {bookingError && (
+            <div className="mb-4 p-4 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
+              {bookingError}
+            </div>
+          )}
+          {dateConflict && (
+            <div className="mb-4 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-sm">
+              Selected dates overlap with an existing booking. Please choose different dates.
+            </div>
+          )}
           <button
-            disabled={!canBook}
+            onClick={handleBook}
+            disabled={!canBook || isBooking}
             className="w-full py-4 px-6 font-semibold text-white bg-orange-500 rounded-xl hover:bg-orange-600 transition-all duration-200 shadow-lg shadow-orange-500/30 hover:shadow-orange-600/40 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label={canBook ? 'Book this venue' : 'Select check-in and check-out dates to book'}
           >
-            Book Now
+            {isBooking ? 'Booking...' : 'Book Now'}
           </button>
           {!canBook && <p className="text-xs text-stone-400 mt-2 text-center">Select dates to continue</p>}
         </div>

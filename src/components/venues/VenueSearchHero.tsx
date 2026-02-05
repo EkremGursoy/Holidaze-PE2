@@ -5,7 +5,7 @@ type VenueSearchHeroProps = {
 
 export default function VenueSearchHero({ value, onChange }: VenueSearchHeroProps) {
   return (
-    <section className="bg-orange-50 border-b border-orange-100 py-20 px-6 -mx-6 -mt-8 mb-12">
+    <section className="bg-orange-50 border-b border-orange-100 py-12 sm:py-20 px-4 sm:px-6 -mx-4 sm:-mx-6 -mt-8 mb-12">
       <div className="max-w-4xl mx-auto text-center">
         <span className="inline-block py-1 px-3 rounded-full bg-orange-100 text-orange-600 text-sm font-semibold mb-6">
           Explore the world
@@ -23,10 +23,10 @@ export default function VenueSearchHero({ value, onChange }: VenueSearchHeroProp
         <div className="relative max-w-2xl mx-auto group">
           <input
             type="text"
-            placeholder="Search venues by name or description..."
+            placeholder="Search venues..."
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="w-full px-8 py-5 rounded-full text-stone-800 bg-white text-lg focus:outline-none focus:ring-4 focus:ring-orange-100 border border-stone-200 shadow-xl shadow-orange-100/50 transition-all placeholder-stone-400"
+            className="w-full px-5 sm:px-8 py-4 sm:py-5 rounded-full text-stone-800 bg-white text-base sm:text-lg focus:outline-none focus:ring-4 focus:ring-orange-100 border border-stone-200 shadow-xl shadow-orange-100/50 transition-all placeholder-stone-400"
           />
           <div className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-orange-500 p-2.5 rounded-full text-white shadow-lg">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

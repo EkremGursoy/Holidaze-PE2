@@ -111,7 +111,7 @@ export default function VenueDetailsPage() {
 
         {/* Right Column - Booking Card */}
         <div className="lg:col-span-1">
-          <BookingCard price={venue.price} maxGuests={venue.maxGuests} isAuthenticated={isAuthenticated} />
+          <BookingCard venueId={venue.id} price={venue.price} maxGuests={venue.maxGuests} isAuthenticated={isAuthenticated} bookings={venue.bookings} />
         </div>
       </div>
     </div>

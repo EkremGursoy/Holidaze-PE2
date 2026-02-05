@@ -22,8 +22,9 @@ export default function CreateVenuePage() {
     try {
       const venueId = await createVenue(data, user.accessToken, apiKey)
       navigate(`/venue/${venueId}`)
-    } finally {
+    } catch (err) {
       setIsSubmitting(false)
+      throw err
     }
   }
 

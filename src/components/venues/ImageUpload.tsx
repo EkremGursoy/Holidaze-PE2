@@ -50,7 +50,7 @@ export default function ImageUpload({
               <button
                 type="button"
                 onClick={() => onRemoveImage(index)}
-                className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
               >
                 ×
               </button>

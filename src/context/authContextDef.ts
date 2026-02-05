@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import type { User } from '../types/auth'
 
-export type AuthContextType = {
+type AuthContextType = {
   user: User | null
   apiKey: string | null
   isAuthenticated: boolean

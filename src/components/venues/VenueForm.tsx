@@ -19,7 +19,6 @@ const defaultFormData: VenueFormData = {
   media: [],
   price: 0,
   maxGuests: 1,
-  rating: 0,
   meta: {
     wifi: false,
     parking: false,
@@ -31,6 +30,7 @@ const defaultFormData: VenueFormData = {
     city: '',
     zip: '',
     country: '',
+    continent: '',
   },
 }
 
@@ -103,7 +103,39 @@ export default function VenueForm({ initialData, onSubmit, submitLabel, isSubmit
     }
 
     try {
-      await onSubmit(formData)
+      // Clean up the data before sending - remove empty optional fields
+      const cleanedData: VenueFormData = {
+        name: formData.name.trim(),
+        description: formData.description.trim(),
+        price: formData.price,
+        maxGuests: formData.maxGuests,
+      }
+
+      // Only include media if there are images
+      if (formData.media && formData.media.length > 0) {
+        cleanedData.media = formData.media
+      }
+
+      // Only include meta if at least one is true
+      if (formData.meta) {
+        cleanedData.meta = formData.meta
+      }
+
+      // Only include location if at least one field has a value
+      if (formData.location) {
+        const { address, city, zip, country, continent } = formData.location
+        if (address || city || zip || country || continent) {
+          cleanedData.location = {
+            address: address || undefined,
+            city: city || undefined,
+            zip: zip || undefined,
+            country: country || undefined,
+            continent: continent || undefined,
+          }
+        }
+      }
+
+      await onSubmit(cleanedData)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong')
     }
@@ -145,7 +177,7 @@ export default function VenueForm({ initialData, onSubmit, submitLabel, isSubmit
           required
         />
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <FormInput
             id="price"
             label="Price per night ($)"

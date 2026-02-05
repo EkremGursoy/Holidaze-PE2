@@ -54,13 +54,13 @@ export default function UpdateVenuePage() {
     media: venue.media?.map((m) => ({ url: m.url, alt: m.alt || undefined })) || [],
     price: venue.price,
     maxGuests: venue.maxGuests,
-    rating: venue.rating,
     meta: venue.meta,
     location: {
       address: venue.location?.address || '',
       city: venue.location?.city || '',
       zip: venue.location?.zip || '',
       country: venue.location?.country || '',
+      continent: venue.location?.continent || '',
     },
   }
 
@@ -71,8 +71,9 @@ export default function UpdateVenuePage() {
     try {
       await updateVenue(id, data, user.accessToken, apiKey)
       navigate(`/venue/${id}`)
-    } finally {
+    } catch (err) {
       setIsSubmitting(false)
+      throw err
     }
   }
 

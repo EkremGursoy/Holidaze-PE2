@@ -5,6 +5,9 @@ type LocationData = {
   city?: string
   zip?: string
   country?: string
+  continent?: string
+  lat?: number
+  lng?: number
 }
 
 type LocationFieldsProps = {
@@ -17,7 +20,7 @@ export default function LocationFields({ location, onChange }: LocationFieldsPro
     <div className="space-y-4">
       <h2 className="text-lg font-bold text-stone-800">Location (Optional)</h2>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <FormInput
           id="location.city"
           label="City"

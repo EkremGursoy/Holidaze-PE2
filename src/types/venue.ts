@@ -15,6 +15,9 @@ export type VenueLocation = {
   city?: string | null
   zip?: string | null
   country?: string | null
+  continent?: string | null
+  lat?: number | null
+  lng?: number | null
 }
 
 export type Venue = {
