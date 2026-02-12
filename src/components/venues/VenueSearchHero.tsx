@@ -26,6 +26,7 @@ export default function VenueSearchHero({ value, onChange }: VenueSearchHeroProp
             placeholder="Search venues..."
             value={value}
             onChange={(e) => onChange(e.target.value)}
+            aria-label="Search venues"
             className="w-full px-5 sm:px-8 py-4 sm:py-5 rounded-full text-stone-800 bg-white text-base sm:text-lg focus:outline-none focus:ring-4 focus:ring-orange-100 border border-stone-200 shadow-xl shadow-orange-100/50 transition-all placeholder-stone-400"
           />
           <div className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-orange-500 p-2.5 rounded-full text-white shadow-lg">

@@ -32,6 +32,17 @@ export type Venue = {
   location: VenueLocation
 }
 
+export type VenuesMeta = {
+  isFirstPage: boolean
+  isLastPage: boolean
+  currentPage: number
+  previousPage: number | null
+  nextPage: number | null
+  pageCount: number
+  totalCount: number
+}
+
 export type VenuesResponse = {
   data: Venue[]
+  meta: VenuesMeta
 }

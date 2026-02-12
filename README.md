@@ -1,73 +1,85 @@
-# React + TypeScript + Vite
+# Holidaze - Accommodation Booking Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern front-end accommodation booking application built for the Noroff Project Exam 2. Holidaze allows customers to browse and book venues, while venue managers can register and manage their properties and bookings.
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Holidaze is a full-featured accommodation booking platform with two user roles:
 
-## React Compiler
+- **Customers** can browse venues, search for specific properties, view availability calendars, create bookings, and manage their upcoming reservations.
+- **Venue Managers** can create, edit, and delete venues, and view bookings for their managed properties.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+All users can view venue listings, search venues, view individual venue details, and see a calendar with available/booked dates.
 
-## Expanding the ESLint configuration
+## Built With
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React 19](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [React Router 7](https://reactrouter.com/)
+- [Noroff Holidaze API v2](https://docs.noroff.dev/)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Node.js 18+
+- npm
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Installation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/holidaze-pe2.git
+   cd holidaze-pe2
+   ```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in the root directory:
+   ```
+   VITE_API_BASE_URL=https://v2.api.noroff.dev
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Scripts
+
+| Command           | Description                    |
+| ----------------- | ------------------------------ |
+| `npm run dev`     | Start development server       |
+| `npm run build`   | Build for production           |
+| `npm run preview` | Preview production build       |
+| `npm run lint`    | Run ESLint                     |
+
+## User Stories
+
+### All Users
+- View a list of Venues
+- Search for a specific Venue
+- View a Venue page by ID
+- Register as a Customer or Venue Manager (stud.noroff.no email required)
+- View a calendar with available and booked dates
+
+### Customers
+- Log in and log out
+- Create a booking
+- View upcoming bookings
+- Update avatar/profile picture
+
+### Venue Managers
+- Log in and log out
+- Create, edit, and delete a Venue
+- View upcoming bookings for managed Venues
+- Update avatar/profile picture
+
+## Contact
+
+Feel free to reach out for questions or feedback.

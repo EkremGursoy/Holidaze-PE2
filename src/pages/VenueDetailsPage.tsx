@@ -7,7 +7,7 @@ import { useVenue } from '../hooks/useVenue'
 
 export default function VenueDetailsPage() {
   const { id } = useParams()
-  const { venue, loading, error } = useVenue(id)
+  const { venue, loading, error, refetch } = useVenue(id)
   const { isAuthenticated } = useAuth()
 
   if (loading) {
@@ -111,7 +111,7 @@ export default function VenueDetailsPage() {
 
         {/* Right Column - Booking Card */}
         <div className="lg:col-span-1">
-          <BookingCard venueId={venue.id} price={venue.price} maxGuests={venue.maxGuests} isAuthenticated={isAuthenticated} bookings={venue.bookings} />
+          <BookingCard venueId={venue.id} price={venue.price} maxGuests={venue.maxGuests} isAuthenticated={isAuthenticated} bookings={venue.bookings} onBookingComplete={refetch} />
         </div>
       </div>
     </div>

@@ -20,7 +20,6 @@ export default function Navbar() {
   const guestLinks = [
     { name: 'Home', path: '/' },
     { name: 'Login', path: '/login' },
-    { name: 'Register', path: '/register' },
   ];
 
   const authLinks = [
@@ -94,7 +93,7 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <Link to="/login" className="px-5 py-2.5 font-semibold text-white transition-all duration-200 bg-orange-500 rounded-full hover:bg-orange-600 shadow-lg shadow-orange-500/30 hover:shadow-orange-600/40">
+            <Link to="/register" className="px-5 py-2.5 font-semibold text-white transition-all duration-200 bg-orange-500 rounded-full hover:bg-orange-600 shadow-lg shadow-orange-500/30 hover:shadow-orange-600/40">
               Get Started
             </Link>
           )}
@@ -137,7 +136,7 @@ export default function Navbar() {
               </>
             ) : (
               <Link
-                to="/login"
+                to="/register"
                 className="px-5 py-2.5 font-semibold text-white transition-all bg-orange-500 rounded-full hover:bg-orange-600 text-center shadow-lg shadow-orange-500/30"
                 onClick={() => setIsOpen(false)}
               >

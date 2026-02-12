@@ -17,18 +17,18 @@ export default function ImageUpload({
     <div className="space-y-4">
       <h2 className="text-lg font-bold text-stone-800">Images</h2>
 
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-2">
         <input
           type="url"
           value={imageUrl}
           onChange={(e) => onImageUrlChange(e.target.value)}
           placeholder="Enter image URL"
-          className="flex-1 px-5 py-3.5 rounded-xl text-stone-800 bg-stone-50 border border-stone-200 focus:outline-none focus:ring-4 focus:ring-orange-100 focus:border-orange-300 transition-all placeholder-stone-400"
+          className="flex-1 min-w-0 px-5 py-3.5 rounded-xl text-stone-800 bg-stone-50 border border-stone-200 focus:outline-none focus:ring-4 focus:ring-orange-100 focus:border-orange-300 transition-all placeholder-stone-400"
         />
         <button
           type="button"
           onClick={onAddImage}
-          className="px-6 py-3.5 bg-stone-800 text-white font-semibold rounded-xl hover:bg-stone-700 transition-colors"
+          className="w-full sm:w-auto px-6 py-3.5 bg-stone-800 text-white font-semibold rounded-xl hover:bg-stone-700 transition-colors shrink-0"
         >
           Add
         </button>

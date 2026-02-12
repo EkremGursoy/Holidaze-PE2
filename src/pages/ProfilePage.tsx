@@ -159,8 +159,10 @@ export default function ProfilePage() {
           </div>
         )}
 
-        {/* Bookings List */}
-        <BookingsList bookings={bookings} loading={bookingsLoading} />
+        {/* Upcoming Bookings - for customers */}
+        {!profile.venueManager && (
+          <BookingsList bookings={bookings} loading={bookingsLoading} />
+        )}
       </div>
 
       {/* Edit Profile Modal */}
